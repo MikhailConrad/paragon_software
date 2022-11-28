@@ -4,6 +4,7 @@ import com.example.paragon_software_task.entity.StatusChangingRequestDTO;
 import com.example.paragon_software_task.entity.StatusChangingResponseDTO;
 import com.example.paragon_software_task.entity.User;
 import com.example.paragon_software_task.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,7 +31,7 @@ public class UserController {
     }
 
     @PostMapping
-    public int addUser(@RequestBody User user) {
+    public int addUser(@RequestBody @Valid User user) {
         return userService.addUser(user).getId();
     }
 

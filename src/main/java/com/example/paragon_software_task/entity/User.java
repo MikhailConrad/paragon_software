@@ -8,6 +8,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -21,12 +24,16 @@ public class User {
     @Column(name = "id")
     private int id;
 
+    @NotBlank
+    @Pattern(regexp = "^[A-Za-zА-Яа-я-]+$", message = "В имени использованы недопустимые символы")
     @Column(name = "username")
     private String username;
 
+    @Email(message = "Некорректно введен e-mail")
     @Column(name = "email")
     private String email;
 
+    @Pattern(regexp = "^(\\+|\\d)\\d{7,15}$", message = "В номере телефона допустимо использование только цифр и + в начале")
     @Column(name = "phone_number")
     private String phoneNumber;
 
