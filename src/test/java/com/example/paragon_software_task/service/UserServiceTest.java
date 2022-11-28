@@ -4,6 +4,7 @@ import com.example.paragon_software_task.entity.Status;
 import com.example.paragon_software_task.entity.StatusChangingRequestDTO;
 import com.example.paragon_software_task.entity.StatusChangingResponseDTO;
 import com.example.paragon_software_task.entity.User;
+import com.example.paragon_software_task.exception.UserNotFoundException;
 import com.example.paragon_software_task.repository.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +20,6 @@ import org.mockito.quality.Strictness;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -37,11 +37,12 @@ class UserServiceTest {
 
         User userInDb = new User("Alex", "alex@mail.ru", "8-900-000-00-00");
 
-        Mockito.when(userRepository.findById(anyInt()))
+        Mockito.when(userRepository.findById(1))
                 .thenReturn(Optional.of(userInDb));
+        Mockito.when(userRepository.findById(10))
+                .thenReturn(Optional.empty());
         Mockito.when(userRepository.save(any()))
                 .thenReturn(userInDb);
-
     }
 
     @Test
@@ -55,6 +56,19 @@ class UserServiceTest {
 
         //then
         Assertions.assertEquals(userForTest, user);
+    }
+
+    @Test
+    public void findUserByIncorrectId() {
+        //given
+        int id = 10;
+
+        //when
+        Exception exception = Assertions.assertThrows(UserNotFoundException.class, () -> userService.findUser(id));
+
+        //then
+        Assertions.assertEquals(exception.getMessage(), "Пользователя с таким ID не существует.");
+
     }
 
     @Test
