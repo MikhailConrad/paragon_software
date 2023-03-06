@@ -1,6 +1,6 @@
 package com.example.paragon_software_task.repository;
 
-import com.example.paragon_software_task.entity.User;
+import com.example.paragon_software_task.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

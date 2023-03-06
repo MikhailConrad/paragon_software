@@ -1,4 +1,4 @@
-package com.example.paragon_software_task.entity;
+package com.example.paragon_software_task.model.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,23 +23,14 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
-
-    @NotBlank
-    @Pattern(regexp = "^[A-Za-zА-Яа-я-]+$", message = "В имени использованы недопустимые символы")
     @Column(name = "username")
     private String username;
-
-    @Email(message = "Некорректно введен e-mail")
     @Column(name = "email")
     private String email;
-
-    @Pattern(regexp = "^(\\+|\\d)\\d{7,15}$", message = "В номере телефона допустимо использование только цифр и + в начале")
     @Column(name = "phone_number")
     private String phoneNumber;
-
     @Column(name = "date_of_status_change")
     private LocalDateTime dateOfStatusChange;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private Status status;

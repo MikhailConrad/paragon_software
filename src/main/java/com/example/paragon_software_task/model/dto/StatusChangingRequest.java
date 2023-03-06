@@ -1,11 +1,13 @@
-package com.example.paragon_software_task.entity;
+package com.example.paragon_software_task.model.dto;
 
-public class StatusChangingRequestDTO {
+import com.example.paragon_software_task.model.entity.Status;
+
+public class StatusChangingRequest {
 
     private int userId;
     private Status newStatus;
 
-    public StatusChangingRequestDTO(int userId, Status newStatus) {
+    public StatusChangingRequest(int userId, Status newStatus) {
         this.userId = userId;
         this.newStatus = newStatus;
     }

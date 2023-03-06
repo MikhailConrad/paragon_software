@@ -1,10 +1,10 @@
-package com.example.paragon_software_task.entity;
+package com.example.paragon_software_task.model.dto;
 
-public class UserIncorrectData {
+public class IncorrectDataResponse {
 
     private String info;
 
-    public UserIncorrectData(String info) {
+    public IncorrectDataResponse(String info) {
         this.info = info;
     }
 

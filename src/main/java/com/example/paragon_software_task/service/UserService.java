@@ -1,9 +1,11 @@
 package com.example.paragon_software_task.service;
 
-import com.example.paragon_software_task.entity.Status;
-import com.example.paragon_software_task.entity.StatusChangingRequestDTO;
-import com.example.paragon_software_task.entity.StatusChangingResponseDTO;
-import com.example.paragon_software_task.entity.User;
+import com.example.paragon_software_task.model.dto.AddUserRequest;
+import com.example.paragon_software_task.model.dto.UserResponse;
+import com.example.paragon_software_task.model.entity.Status;
+import com.example.paragon_software_task.model.dto.StatusChangingRequest;
+import com.example.paragon_software_task.model.dto.StatusChangingResponse;
+import com.example.paragon_software_task.model.entity.User;
 import com.example.paragon_software_task.exception.UserNotFoundException;
 import com.example.paragon_software_task.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,22 +29,24 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User findUser(int userId) {
+    public UserResponse findUser(int id) {
 
-        return userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+        return mapToUserResponse(userRepository.findById(id)
+                .orElseThrow(UserNotFoundException::new));
     }
 
-    public User addUser(User user) {
+    public int addUser(AddUserRequest request) {
 
+        User user = new User(request.getUsername(), request.getEmail(), request.getPhoneNumber());
         user.setStatus(Status.OFFLINE);
         user.setDateOfStatusChange(LocalDateTime.now());
-        return userRepository.save(user);
+        return userRepository.save(user).getId();
     }
 
-    public StatusChangingResponseDTO updateUserStatus(StatusChangingRequestDTO statusChangingRequest) {
+    public StatusChangingResponse updateUserStatus(StatusChangingRequest statusChangingRequest) {
 
         User user = userRepository.findById(statusChangingRequest.getUserId()).orElseThrow(UserNotFoundException::new);
-        StatusChangingResponseDTO statusChangingResponse = new StatusChangingResponseDTO(
+        StatusChangingResponse statusChangingResponse = new StatusChangingResponse(
                 user.getId(),
                 statusChangingRequest.getNewStatus(),
                 user.getStatus()
@@ -79,6 +83,16 @@ public class UserService {
         };
 
         Timer timer = new Timer();
-        timer.schedule(timerTask, fiveMinutesInMillis);
+        timer.schedule(timerTask, time);
+    }
+
+    private UserResponse mapToUserResponse (User user) {
+        return new UserResponse(
+                user.getUsername(),
+                user.getEmail(),
+                user.getPhoneNumber(),
+                user.getDateOfStatusChange(),
+                user.getStatus().toString()
+        );
     }
 }

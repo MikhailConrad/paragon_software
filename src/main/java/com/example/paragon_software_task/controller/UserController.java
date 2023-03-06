@@ -1,8 +1,9 @@
 package com.example.paragon_software_task.controller;
 
-import com.example.paragon_software_task.entity.StatusChangingRequestDTO;
-import com.example.paragon_software_task.entity.StatusChangingResponseDTO;
-import com.example.paragon_software_task.entity.User;
+import com.example.paragon_software_task.model.dto.StatusChangingRequest;
+import com.example.paragon_software_task.model.dto.StatusChangingResponse;
+import com.example.paragon_software_task.model.dto.AddUserRequest;
+import com.example.paragon_software_task.model.dto.UserResponse;
 import com.example.paragon_software_task.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,17 +27,17 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public User findUser(@PathVariable int id) {
+    public UserResponse findUser(@PathVariable int id) {
         return userService.findUser(id);
     }
 
     @PostMapping
-    public int addUser(@RequestBody @Valid User user) {
-        return userService.addUser(user).getId();
+    public int addUser(@RequestBody @Valid AddUserRequest user) {
+        return userService.addUser(user);
     }
 
     @PutMapping("/status")
-    public StatusChangingResponseDTO updateUserStatus(@RequestBody StatusChangingRequestDTO statusChangingRequest) {
+    public StatusChangingResponse updateUserStatus(@RequestBody StatusChangingRequest statusChangingRequest) {
 
         return userService.updateUserStatus(statusChangingRequest);
     }

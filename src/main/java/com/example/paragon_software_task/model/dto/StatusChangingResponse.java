@@ -1,6 +1,8 @@
-package com.example.paragon_software_task.entity;
+package com.example.paragon_software_task.model.dto;
 
-public class StatusChangingResponseDTO {
+import com.example.paragon_software_task.model.entity.Status;
+
+public class StatusChangingResponse {
 
     private int userId;
 
@@ -8,7 +10,7 @@ public class StatusChangingResponseDTO {
 
     private Status oldStatus;
 
-    public StatusChangingResponseDTO(int userId, Status newStatus, Status oldStatus) {
+    public StatusChangingResponse(int userId, Status newStatus, Status oldStatus) {
         this.userId = userId;
         this.newStatus = newStatus;
         this.oldStatus = oldStatus;

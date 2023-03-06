@@ -1,6 +1,6 @@
 package com.example.paragon_software_task.exception;
 
-import com.example.paragon_software_task.entity.UserIncorrectData;
+import com.example.paragon_software_task.model.dto.IncorrectDataResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -16,10 +16,10 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<UserIncorrectData> userNotFound(UserNotFoundException exception) {
+    public ResponseEntity<IncorrectDataResponse> userNotFound(UserNotFoundException exception) {
 
-        UserIncorrectData userIncorrectData = new UserIncorrectData(exception.getMessage());
-        return new ResponseEntity<>(userIncorrectData, HttpStatus.NOT_FOUND);
+        IncorrectDataResponse incorrectDataResponse = new IncorrectDataResponse(exception.getMessage());
+        return new ResponseEntity<>(incorrectDataResponse, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
